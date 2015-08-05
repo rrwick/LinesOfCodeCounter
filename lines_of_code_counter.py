@@ -45,7 +45,8 @@ lineCount = 0
 totalBlankLineCount = 0
 totalCommentLineCount = 0
 
-print "Filename\tlines\tblank lines\tcomment lines\tcode lines"
+print ''
+print 'Filename\tlines\tblank lines\tcomment lines\tcode lines'
 
 for fileToCheck in filesToCheck:
     with open(fileToCheck) as f:
