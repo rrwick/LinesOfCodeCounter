@@ -41,21 +41,42 @@ if not filesToCheck:
     print 'No files found.'
     quit()
 
-totalLineCount = 0
-blankLineCount = 0
-commentLineCount = 0
+lineCount = 0
+totalBlankLineCount = 0
+totalCommentLineCount = 0
+
+print "Filename\tlines\tblank lines\tcomment lines\tcode lines"
 
 for fileToCheck in filesToCheck:
     with open(fileToCheck) as f:
+
+        fileLineCount = 0
+        fileBlankLineCount = 0
+        fileCommentLineCount = 0
+
         for line in f:
-            totalLineCount += 1
+            lineCount += 1
+            fileLineCount += 1
+
             lineWithoutWhitespace = line.strip()
             if not lineWithoutWhitespace:
-                blankLineCount += 1
+                totalBlankLineCount += 1
+                fileBlankLineCount += 1
             elif lineWithoutWhitespace.startswith(commentSymbol):
-                commentLineCount += 1
+                totalCommentLineCount += 1
+                fileCommentLineCount += 1
 
-print 'Total lines:   ' + str(totalLineCount)
-print 'Blank lines:   ' + str(blankLineCount)
-print 'Comment lines: ' + str(commentLineCount)
-print 'Code lines:    ' + str(totalLineCount - blankLineCount - commentLineCount)
+        print os.path.basename(fileToCheck) + \
+              "\t" + str(fileLineCount) + \
+              "\t" + str(fileBlankLineCount) + \
+              "\t" + str(fileCommentLineCount) + \
+              "\t" + str(fileLineCount - fileBlankLineCount - fileCommentLineCount)
+
+
+print ''
+print 'Totals'
+print '--------------------'
+print 'Lines:         ' + str(lineCount)
+print 'Blank lines:   ' + str(totalBlankLineCount)
+print 'Comment lines: ' + str(totalCommentLineCount)
+print 'Code lines:    ' + str(lineCount - totalBlankLineCount - totalCommentLineCount)
